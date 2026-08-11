@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // ==========================================================================
-// Baraat Band — 37 Official Tracks (Exact Original Song Audio Stream)
+// Baraat Band — Initial Track Metadata (Synced Live with YouTube Playlist)
 // ==========================================================================
 const OFFICIAL_PLAYLIST = [
   { id: 'k4yXQkzyLNI', title: 'Kala Chashma', artist: 'Amar Arshi, Badshah, Neha Kakkar & Indeep Bakshi', thumbnail: 'https://i.ytimg.com/vi/k4yXQkzyLNI/mqdefault.jpg' },
@@ -13,18 +13,7 @@ const OFFICIAL_PLAYLIST = [
   { id: 'JLEnlb8TrIo', title: 'Chogada (From "Loveyatri")', artist: 'Darshan Raval, Asees Kaur & Lijo George', thumbnail: 'https://i.ytimg.com/vi/JLEnlb8TrIo/mqdefault.jpg' },
   { id: 'N993-9q-h1w', title: 'Gallan Goodiyaan', artist: 'Shankar Mahadevan & Yashita Sharma', thumbnail: 'https://i.ytimg.com/vi/N993-9q-h1w/mqdefault.jpg' },
   { id: 'ZVFk5_Y1vGg', title: 'Badri Ki Dulhania', artist: 'Dev Negi, Neha Kakkar & Monali Thakur', thumbnail: 'https://i.ytimg.com/vi/ZVFk5_Y1vGg/mqdefault.jpg' },
-  { id: 'xG-e5o8Wv4A', title: 'Banno Tera Swagger', artist: 'Brijesh Shandilya & Swati Sharma', thumbnail: 'https://i.ytimg.com/vi/xG-e5o8Wv4A/mqdefault.jpg' },
-
-  { id: 'B6B61LhB1Zk', title: 'Sadi Gali', artist: 'Lehmber Hussainpuri', thumbnail: 'https://i.ytimg.com/vi/B6B61LhB1Zk/mqdefault.jpg' },
-  { id: 'q_0N__T7274', title: 'Sauda Khara Khara', artist: 'Diljit Dosanjh, Sukhbir & Dhvani Bhanushali', thumbnail: 'https://i.ytimg.com/vi/q_0N__T7274/mqdefault.jpg' },
-  { id: 'w_M67GZg8G8', title: 'Zingaat (Hindi)', artist: 'Ajay-Atul', thumbnail: 'https://i.ytimg.com/vi/w_M67GZg8G8/mqdefault.jpg' },
-  { id: '1607l6M5y88', title: 'High Heels Te Nachche', artist: 'Meet Bros, Yo Yo Honey Singh & Jaz Dhami', thumbnail: 'https://i.ytimg.com/vi/1607l6M5y88/mqdefault.jpg' },
-  { id: 'A5pSnIwbpaM', title: 'Kar Gayi Chull', artist: 'Badshah, Fazilpuria, Sukriti Kakar & Neha Kakkar', thumbnail: 'https://i.ytimg.com/vi/A5pSnIwbpaM/mqdefault.jpg' },
-  { id: '89_30g9hJ6c', title: 'Abhi Toh Party Shuru Hui Hai', artist: 'Badshah & Aastha Gill', thumbnail: 'https://i.ytimg.com/vi/89_30g9hJ6c/mqdefault.jpg' },
-  { id: 'HgIW7P4dsXU', title: 'Nachde Ne Saare', artist: 'Jasleen Royal, Harshdeep Kaur & Siddharth Mahadevan', thumbnail: 'https://i.ytimg.com/vi/HgIW7P4dsXU/mqdefault.jpg' },
-  { id: 'xWi8nVAOWd4', title: 'Dil Chori', artist: 'Yo Yo Honey Singh, Simar Kaur & Ishers', thumbnail: 'https://i.ytimg.com/vi/xWi8nVAOWd4/mqdefault.jpg' },
-  { id: 'Z0y2m9fK840', title: 'Sweety Tera Drama', artist: 'Dev Negi, Pawni Pandey & Shraddha Pandit', thumbnail: 'https://i.ytimg.com/vi/Z0y2m9fK840/mqdefault.jpg' },
-  { id: 'gQ99OMlI5v8', title: 'Cutiepie', artist: 'Pardeep Singh Sran & Nakash Aziz', thumbnail: 'https://i.ytimg.com/vi/gQ99OMlI5v8/mqdefault.jpg' }
+  { id: 'xG-e5o8Wv4A', title: 'Banno Tera Swagger', artist: 'Brijesh Shandilya & Swati Sharma', thumbnail: 'https://i.ytimg.com/vi/xG-e5o8Wv4A/mqdefault.jpg' }
 ];
 
 export default function App() {
@@ -36,12 +25,13 @@ export default function App() {
   const [isPlayerReady, setIsPlayerReady] = useState(false);
   const [onlineCount, setOnlineCount] = useState(34);
   const [language, setLanguage] = useState('hi');
+  const [liveMetaData, setLiveMetaData] = useState(null);
 
   const playerRef = useRef(null);
   const progressTimerRef = useRef(null);
   const dragSeekingRef = useRef(false);
 
-  const currentTrack = OFFICIAL_PLAYLIST[currentTrackIndex] || OFFICIAL_PLAYLIST[0];
+  const currentTrack = liveMetaData || OFFICIAL_PLAYLIST[currentTrackIndex] || OFFICIAL_PLAYLIST[0];
 
   // Clock Display
   useEffect(() => {
@@ -58,7 +48,7 @@ export default function App() {
     return () => clearInterval(clockInterval);
   }, []);
 
-  // Online count simulation
+  // Online viewer count
   useEffect(() => {
     const interval = setInterval(() => {
       setOnlineCount(30 + Math.floor(Math.random() * 10));
@@ -66,7 +56,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Load YouTube IFrame API for Exact Song Audio Streaming
+  // Initialize YouTube Player with full Playlist PLIB_nTfiAgYk
   useEffect(() => {
     if (!window.YT) {
       const tag = document.createElement('script');
@@ -89,8 +79,9 @@ export default function App() {
     playerRef.current = new window.YT.Player('yt-player-iframe', {
       height: '1px',
       width: '1px',
-      videoId: OFFICIAL_PLAYLIST[0].id,
       playerVars: {
+        listType: 'playlist',
+        list: 'PLIB_nTfiAgYk', // User's official 37-track playlist
         autoplay: 0,
         controls: 0,
         disablekb: 1,
@@ -115,9 +106,22 @@ export default function App() {
   const handlePlayerStateChange = (event) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
       setIsPlaying(true);
-      if (playerRef.current && playerRef.current.getDuration) {
+      if (playerRef.current && typeof playerRef.current.getDuration === 'function') {
         const d = playerRef.current.getDuration();
         if (d > 0) setDuration(d);
+      }
+
+      // Sync metadata live from YouTube's playlist engine as songs transition
+      if (playerRef.current && typeof playerRef.current.getVideoData === 'function') {
+        const data = playerRef.current.getVideoData();
+        if (data && data.title) {
+          const validId = (data.video_id && typeof data.video_id === 'string' && data.video_id.length === 11) ? data.video_id : null;
+          setLiveMetaData({
+            title: data.title,
+            artist: data.author || 'Baraat Band',
+            thumbnail: validId ? `https://i.ytimg.com/vi/${validId}/mqdefault.jpg` : currentTrack.thumbnail
+          });
+        }
       }
       startProgressLoop();
     } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.CUED) {
@@ -126,7 +130,10 @@ export default function App() {
     } else if (event.data === window.YT.PlayerState.ENDED) {
       setIsPlaying(false);
       stopProgressLoop();
-      handleNext();
+      // Seamlessly advance to next song in playlist when current finishes
+      if (playerRef.current && typeof playerRef.current.nextVideo === 'function') {
+        playerRef.current.nextVideo();
+      }
     }
   };
 
@@ -162,27 +169,29 @@ export default function App() {
     }
   };
 
-  const playTrackAtIndex = (index) => {
-    setCurrentTrackIndex(index);
-    setCurrentTime(0);
-    setDuration(0);
-    if (playerRef.current && typeof playerRef.current.loadVideoById === 'function') {
-      playerRef.current.loadVideoById(OFFICIAL_PLAYLIST[index].id);
+  const handleNext = () => {
+    setLiveMetaData(null);
+    if (playerRef.current && typeof playerRef.current.nextVideo === 'function') {
+      playerRef.current.nextVideo();
       setIsPlaying(true);
+    } else {
+      const nextIdx = (currentTrackIndex + 1) % OFFICIAL_PLAYLIST.length;
+      setCurrentTrackIndex(nextIdx);
     }
   };
 
-  const handleNext = () => {
-    const nextIdx = (currentTrackIndex + 1) % OFFICIAL_PLAYLIST.length;
-    playTrackAtIndex(nextIdx);
-  };
-
   const handlePrev = () => {
-    const prevIdx = (currentTrackIndex - 1 + OFFICIAL_PLAYLIST.length) % OFFICIAL_PLAYLIST.length;
-    playTrackAtIndex(prevIdx);
+    setLiveMetaData(null);
+    if (playerRef.current && typeof playerRef.current.previousVideo === 'function') {
+      playerRef.current.previousVideo();
+      setIsPlaying(true);
+    } else {
+      const prevIdx = (currentTrackIndex - 1 + OFFICIAL_PLAYLIST.length) % OFFICIAL_PLAYLIST.length;
+      setCurrentTrackIndex(prevIdx);
+    }
   };
 
-  // Interactive Seeking (Drag & Click to move line forward / backward)
+  // Interactive Slider Seeking
   const handleSeekInput = (e) => {
     dragSeekingRef.current = true;
     const targetTime = parseFloat(e.target.value);
@@ -252,7 +261,7 @@ export default function App() {
         </div>
 
         <div className="top-right-links">
-          {/* Language Switcher Pill (Hindi | English) */}
+          {/* Language Switcher Pill */}
           <div className="lang-switcher">
             <button
               className={`lang-btn ${language === 'hi' ? 'active' : ''}`}
@@ -341,7 +350,7 @@ export default function App() {
           <h2 className="pill-song-title">{currentTrack.title}</h2>
           <p className="pill-song-artist">{currentTrack.artist}</p>
 
-          {/* Interactive Slider Track for Seeking */}
+          {/* Interactive Slider Track */}
           <div className="pill-slider-track">
             <input
               type="range"
