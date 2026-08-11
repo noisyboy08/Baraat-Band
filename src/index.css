@@ -1,0 +1,546 @@
+/* ==========================================================================
+   Baraat Band — Logo Image & Language Switcher Styling
+   ========================================================================== */
+:root {
+  --bg-dark: #0D0705;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --color-maroon: #A8232D;
+  --color-maroon-dark: #4A0E13;
+  --color-gold: #E8A93B;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   Background Illustration Scene
+   ========================================================================== */
+.bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.bg-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/background.jpeg');
+  background-size: cover;
+  background-position: center center;
+  filter: saturate(1.1) contrast(1.02) brightness(0.9);
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(13, 7, 5, 0.1) 0%, rgba(13, 7, 5, 0.65) 100%),
+              linear-gradient(to bottom, rgba(13, 7, 5, 0.15) 0%, rgba(13, 7, 5, 0.55) 100%);
+  z-index: -1;
+}
+
+/* Hidden YT Player Target */
+#yt-player-container {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: -100px;
+  left: -100px;
+  opacity: 0.001;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   TOP BAR — Minimal Plain Text Header with Language Switcher & Platform Logos
+   ========================================================================== */
+.top-bar-minimal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 36px;
+  z-index: 100;
+}
+
+.top-left-time {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0.9;
+  letter-spacing: 0.2px;
+}
+
+.top-center-online {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.green-online-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px 10px;
+  border-radius: 14px;
+  margin-left: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  color: #ffffff;
+}
+
+.lang-btn.active {
+  color: #ffffff;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-sep {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.72rem;
+}
+
+.top-right-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.platform-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.platform-link:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.platform-icon {
+  width: 18px;
+  height: 18px;
+  fill: #ffffff;
+  flex-shrink: 0;
+}
+
+.arrow-icon {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-left: 1px;
+}
+
+/* ==========================================================================
+   HERO TITLE — Dynamic Placement of Hindi/Marathi & English Logo Text Images
+   ========================================================================== */
+.hero-title-container {
+  position: fixed;
+  top: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-logo-img {
+  width: 100%;
+  max-width: clamp(260px, 42vw, 460px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.65));
+  margin-bottom: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.hero-logo-img.english-logo {
+  max-width: clamp(240px, 38vw, 420px);
+}
+
+.hero-subtitle-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   FLOATING PILL PLAYER CARD — Perfect Proportions & Compact Sizing
+   ========================================================================== */
+.pill-player-card {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 56px);
+  max-width: 680px;
+  min-height: 76px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(25px) saturate(1.5);
+  -webkit-backdrop-filter: blur(25px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pill-player-card:hover {
+  transform: translateX(-50%) translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Clean Album Art Thumbnail */
+.clean-album-art-container {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.clean-album-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.clean-album-art.spinning {
+  animation: rotate-disc 12s linear infinite;
+}
+
+@keyframes rotate-disc {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Center Section: Stacked Song Info */
+.pill-player-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.pill-song-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+  letter-spacing: -0.2px;
+}
+
+.pill-song-artist {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 6px;
+}
+
+/* Thin Progress Slider Bar (3px height) */
+.pill-slider-track {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.pill-slider-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  z-index: 5;
+  margin: 0;
+}
+
+.pill-slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+.pill-slider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.pill-time-display {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.2px;
+}
+
+/* Minimal 3-Button Controls ONLY */
+.pill-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.minimal-control-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.minimal-control-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.minimal-control-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Solid White Circular Play Button */
+.minimal-play-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.minimal-play-btn svg {
+  width: 18px;
+  height: 18px;
+  color: #000000;
+}
+
+.minimal-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .top-bar-minimal {
+    padding: 14px 16px;
+  }
+
+  .top-center-online {
+    display: none;
+  }
+
+  .top-right-links {
+    gap: 10px;
+  }
+
+  .lang-switcher {
+    margin-left: 0;
+    padding: 2px 8px;
+  }
+
+  .lang-btn {
+    font-size: 0.72rem;
+    padding: 2px 5px;
+  }
+
+  .platform-name {
+    display: none;
+  }
+
+  .hero-title-container {
+    top: 14vh;
+  }
+
+  .hero-logo-img {
+    width: 84vw;
+    max-width: 330px;
+  }
+
+  .hero-logo-img.english-logo {
+    width: 80vw;
+    max-width: 310px;
+  }
+
+  .hero-subtitle-text {
+    font-size: 0.92rem;
+  }
+
+  .pill-player-card {
+    width: calc(100% - 32px);
+    bottom: 16px;
+    min-height: 72px;
+    padding: 10px 16px;
+  }
+
+  .clean-album-art-container {
+    width: 44px;
+    height: 44px;
+    margin-right: 12px;
+  }
+
+  .pill-song-title {
+    font-size: 0.9rem;
+  }
+  .pill-song-artist {
+    font-size: 0.74rem;
+    margin-bottom: 4px;
+  }
+
+  .minimal-play-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .minimal-play-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .minimal-control-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .minimal-control-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bg-container::before {
+    background-image: url('/mobile background.jpeg');
+  }
+
+  .hero-title-container {
+    top: 15vh;
+  }
+
+  .hero-logo-img {
+    width: 86vw;
+    max-width: 340px;
+  }
+
+  .hero-logo-img.english-logo {
+    width: 82vw;
+    max-width: 320px;
+  }
+
+  .hero-subtitle-text {
+    font-size: 0.88rem;
+  }
+}
