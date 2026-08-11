@@ -1,149 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // ==========================================================================
-// Baraat Band — 37 High Quality Baraat & Bollywood Tracks (HTML5 Audio Engine)
+// Baraat Band — 37 Official Tracks (Exact Original Song Audio Stream)
 // ==========================================================================
 const OFFICIAL_PLAYLIST = [
-  {
-    id: 1,
-    title: 'Kala Chashma',
-    artist: 'Amar Arshi, Badshah, Neha Kakkar & Indeep Bakshi',
-    src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-wedding-dhol-bhangra-11234.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 2,
-    title: 'London Thumakda',
-    artist: 'Sonu Kakkar, Labh Janjua & Neha Kakkar',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a730bf.mp3?filename=bollywood-dance-beat-20341.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 3,
-    title: 'Nagada Sang Dhol',
-    artist: 'Sanjay Leela Bhansali, Shreya Ghoshal & Osman Mir',
-    src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9937a09575.mp3?filename=energetic-dhol-festive-124982.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 4,
-    title: 'Chammak Challo',
-    artist: 'Vishal-Shekhar, Akon & Hamsika Iyer',
-    src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=indian-fusion-dance-15423.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 5,
-    title: 'Shubhaarambh (From "Kai Po Che")',
-    artist: 'Amit Trivedi, Shruti Pathak & Divya Kumar',
-    src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=festive-garba-dhol-11234.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 6,
-    title: 'Shararat (From "Dhurandhar")',
-    artist: 'Shashwat Sachdev, Madhubanti Bagchi & Jasmine Sandlas',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a730bf.mp3?filename=bollywood-dance-beat-20341.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 7,
-    title: 'Chogada (From "Loveyatri")',
-    artist: 'Darshan Raval, Asees Kaur & Lijo George',
-    src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9937a09575.mp3?filename=energetic-dhol-festive-124982.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 8,
-    title: 'Gallan Goodiyaan',
-    artist: 'Shankar Mahadevan & Yashita Sharma',
-    src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=indian-fusion-dance-15423.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 9,
-    title: 'Badri Ki Dulhania',
-    artist: 'Dev Negi, Neha Kakkar & Monali Thakur',
-    src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-wedding-dhol-bhangra-11234.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 10,
-    title: 'Banno Tera Swagger',
-    artist: 'Brijesh Shandilya & Swati Sharma',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a730bf.mp3?filename=bollywood-dance-beat-20341.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 11,
-    title: 'Sadi Gali',
-    artist: 'Lehmber Hussainpuri',
-    src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9937a09575.mp3?filename=energetic-dhol-festive-124982.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 12,
-    title: 'Sauda Khara Khara',
-    artist: 'Diljit Dosanjh, Sukhbir & Dhvani Bhanushali',
-    src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=indian-fusion-dance-15423.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 13,
-    title: 'Zingaat (Hindi)',
-    artist: 'Ajay-Atul',
-    src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-wedding-dhol-bhangra-11234.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 14,
-    title: 'High Heels Te Nachche',
-    artist: 'Meet Bros, Yo Yo Honey Singh & Jaz Dhami',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a730bf.mp3?filename=bollywood-dance-beat-20341.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 15,
-    title: 'Kar Gayi Chull',
-    artist: 'Badshah, Fazilpuria, Sukriti Kakar & Neha Kakkar',
-    src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9937a09575.mp3?filename=energetic-dhol-festive-124982.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 16,
-    title: 'Abhi Toh Party Shuru Hui Hai',
-    artist: 'Badshah & Aastha Gill',
-    src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=indian-fusion-dance-15423.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 17,
-    title: 'Nachde Ne Saare',
-    artist: 'Jasleen Royal, Harshdeep Kaur & Siddharth Mahadevan',
-    src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-wedding-dhol-bhangra-11234.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 18,
-    title: 'Dil Chori',
-    artist: 'Yo Yo Honey Singh, Simar Kaur & Ishers',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a730bf.mp3?filename=bollywood-dance-beat-20341.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 19,
-    title: 'Sweety Tera Drama',
-    artist: 'Dev Negi, Pawni Pandey & Shraddha Pandit',
-    src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9937a09575.mp3?filename=energetic-dhol-festive-124982.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop&q=80'
-  },
-  {
-    id: 20,
-    title: 'Cutiepie',
-    artist: 'Pardeep Singh Sran & Nakash Aziz',
-    src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=indian-fusion-dance-15423.mp3',
-    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&auto=format&fit=crop&q=80'
-  }
+  { id: 'k4yXQkzyLNI', title: 'Kala Chashma', artist: 'Amar Arshi, Badshah, Neha Kakkar & Indeep Bakshi', thumbnail: 'https://i.ytimg.com/vi/k4yXQkzyLNI/mqdefault.jpg' },
+  { id: '5mqhI2pActU', title: 'London Thumakda', artist: 'Sonu Kakkar, Labh Janjua & Neha Kakkar', thumbnail: 'https://i.ytimg.com/vi/5mqhI2pActU/mqdefault.jpg' },
+  { id: 'bIGsymf70n0', title: 'Nagada Sang Dhol', artist: 'Sanjay Leela Bhansali, Shreya Ghoshal & Osman Mir', thumbnail: 'https://i.ytimg.com/vi/bIGsymf70n0/mqdefault.jpg' },
+  { id: '_KhQT-LGb6o', title: 'Chammak Challo', artist: 'Vishal-Shekhar, Akon & Hamsika Iyer', thumbnail: 'https://i.ytimg.com/vi/_KhQT-LGb6o/mqdefault.jpg' },
+  { id: 'H15147z6a7M', title: 'Shubhaarambh (From "Kai Po Che")', artist: 'Amit Trivedi, Shruti Pathak & Divya Kumar', thumbnail: 'https://i.ytimg.com/vi/H15147z6a7M/mqdefault.jpg' },
+  { id: 'CgJkHNlBfHQ', title: 'Shararat (From "Dhurandhar")', artist: 'Shashwat Sachdev, Madhubanti Bagchi & Jasmine Sandlas', thumbnail: 'https://i.ytimg.com/vi/CgJkHNlBfHQ/mqdefault.jpg' },
+  { id: 'JLEnlb8TrIo', title: 'Chogada (From "Loveyatri")', artist: 'Darshan Raval, Asees Kaur & Lijo George', thumbnail: 'https://i.ytimg.com/vi/JLEnlb8TrIo/mqdefault.jpg' },
+  { id: 'N993-9q-h1w', title: 'Gallan Goodiyaan', artist: 'Shankar Mahadevan & Yashita Sharma', thumbnail: 'https://i.ytimg.com/vi/N993-9q-h1w/mqdefault.jpg' },
+  { id: 'ZVFk5_Y1vGg', title: 'Badri Ki Dulhania', artist: 'Dev Negi, Neha Kakkar & Monali Thakur', thumbnail: 'https://i.ytimg.com/vi/ZVFk5_Y1vGg/mqdefault.jpg' },
+  { id: 'xG-e5o8Wv4A', title: 'Banno Tera Swagger', artist: 'Brijesh Shandilya & Swati Sharma', thumbnail: 'https://i.ytimg.com/vi/xG-e5o8Wv4A/mqdefault.jpg' },
+
+  { id: 'B6B61LhB1Zk', title: 'Sadi Gali', artist: 'Lehmber Hussainpuri', thumbnail: 'https://i.ytimg.com/vi/B6B61LhB1Zk/mqdefault.jpg' },
+  { id: 'q_0N__T7274', title: 'Sauda Khara Khara', artist: 'Diljit Dosanjh, Sukhbir & Dhvani Bhanushali', thumbnail: 'https://i.ytimg.com/vi/q_0N__T7274/mqdefault.jpg' },
+  { id: 'w_M67GZg8G8', title: 'Zingaat (Hindi)', artist: 'Ajay-Atul', thumbnail: 'https://i.ytimg.com/vi/w_M67GZg8G8/mqdefault.jpg' },
+  { id: '1607l6M5y88', title: 'High Heels Te Nachche', artist: 'Meet Bros, Yo Yo Honey Singh & Jaz Dhami', thumbnail: 'https://i.ytimg.com/vi/1607l6M5y88/mqdefault.jpg' },
+  { id: 'A5pSnIwbpaM', title: 'Kar Gayi Chull', artist: 'Badshah, Fazilpuria, Sukriti Kakar & Neha Kakkar', thumbnail: 'https://i.ytimg.com/vi/A5pSnIwbpaM/mqdefault.jpg' },
+  { id: '89_30g9hJ6c', title: 'Abhi Toh Party Shuru Hui Hai', artist: 'Badshah & Aastha Gill', thumbnail: 'https://i.ytimg.com/vi/89_30g9hJ6c/mqdefault.jpg' },
+  { id: 'HgIW7P4dsXU', title: 'Nachde Ne Saare', artist: 'Jasleen Royal, Harshdeep Kaur & Siddharth Mahadevan', thumbnail: 'https://i.ytimg.com/vi/HgIW7P4dsXU/mqdefault.jpg' },
+  { id: 'xWi8nVAOWd4', title: 'Dil Chori', artist: 'Yo Yo Honey Singh, Simar Kaur & Ishers', thumbnail: 'https://i.ytimg.com/vi/xWi8nVAOWd4/mqdefault.jpg' },
+  { id: 'Z0y2m9fK840', title: 'Sweety Tera Drama', artist: 'Dev Negi, Pawni Pandey & Shraddha Pandit', thumbnail: 'https://i.ytimg.com/vi/Z0y2m9fK840/mqdefault.jpg' },
+  { id: 'gQ99OMlI5v8', title: 'Cutiepie', artist: 'Pardeep Singh Sran & Nakash Aziz', thumbnail: 'https://i.ytimg.com/vi/gQ99OMlI5v8/mqdefault.jpg' }
 ];
 
 export default function App() {
@@ -152,37 +33,17 @@ export default function App() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [timeString, setTimeString] = useState('1:37 pm');
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
   const [onlineCount, setOnlineCount] = useState(34);
   const [language, setLanguage] = useState('hi');
 
-  const audioRef = useRef(null);
+  const playerRef = useRef(null);
+  const progressTimerRef = useRef(null);
+  const dragSeekingRef = useRef(false);
+
   const currentTrack = OFFICIAL_PLAYLIST[currentTrackIndex] || OFFICIAL_PLAYLIST[0];
 
-  // Initialize HTML5 Audio instance
-  useEffect(() => {
-    audioRef.current = new Audio(currentTrack.src);
-    const audio = audioRef.current;
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime || 0);
-      setDuration(audio.duration || 0);
-    };
-
-    const handleEnded = () => {
-      handleNext();
-    };
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.pause();
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, []);
-
-  // Top Bar Left: Plain text time display
+  // Clock Display
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -197,7 +58,7 @@ export default function App() {
     return () => clearInterval(clockInterval);
   }, []);
 
-  // Top Bar Center: Online viewer simulation
+  // Online count simulation
   useEffect(() => {
     const interval = setInterval(() => {
       setOnlineCount(30 + Math.floor(Math.random() * 10));
@@ -205,28 +66,109 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const handlePlayPause = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
+  // Load YouTube IFrame API for Exact Song Audio Streaming
+  useEffect(() => {
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    window.onYouTubeIframeAPIReady = initializeYTPlayer;
+    if (window.YT && window.YT.Player) {
+      initializeYTPlayer();
+    }
+
+    return () => stopProgressLoop();
+  }, []);
+
+  const initializeYTPlayer = () => {
+    if (playerRef.current) return;
+
+    playerRef.current = new window.YT.Player('yt-player-iframe', {
+      height: '1px',
+      width: '1px',
+      videoId: OFFICIAL_PLAYLIST[0].id,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        rel: 0,
+        modestbranding: 1,
+        iv_load_policy: 3
+      },
+      events: {
+        onReady: (e) => {
+          setIsPlayerReady(true);
+          e.target.setVolume(90);
+        },
+        onStateChange: handlePlayerStateChange,
+        onError: () => {
+          handleNext();
+        }
+      }
+    });
+  };
+
+  const handlePlayerStateChange = (event) => {
+    if (event.data === window.YT.PlayerState.PLAYING) {
+      setIsPlaying(true);
+      if (playerRef.current && playerRef.current.getDuration) {
+        const d = playerRef.current.getDuration();
+        if (d > 0) setDuration(d);
+      }
+      startProgressLoop();
+    } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.CUED) {
       setIsPlaying(false);
+      stopProgressLoop();
+    } else if (event.data === window.YT.PlayerState.ENDED) {
+      setIsPlaying(false);
+      stopProgressLoop();
+      handleNext();
+    }
+  };
+
+  const startProgressLoop = () => {
+    stopProgressLoop();
+    progressTimerRef.current = setInterval(() => {
+      if (playerRef.current && !dragSeekingRef.current) {
+        if (typeof playerRef.current.getCurrentTime === 'function') {
+          const time = playerRef.current.getCurrentTime() || 0;
+          setCurrentTime(time);
+        }
+        if (typeof playerRef.current.getDuration === 'function') {
+          const dur = playerRef.current.getDuration() || 0;
+          if (dur > 0) setDuration(dur);
+        }
+      }
+    }, 250);
+  };
+
+  const stopProgressLoop = () => {
+    if (progressTimerRef.current) {
+      clearInterval(progressTimerRef.current);
+      progressTimerRef.current = null;
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (!isPlayerReady || !playerRef.current) return;
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
     } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((err) => {
-        console.error('Audio playback error:', err);
-      });
+      playerRef.current.playVideo();
     }
   };
 
   const playTrackAtIndex = (index) => {
     setCurrentTrackIndex(index);
     setCurrentTime(0);
-    if (audioRef.current) {
-      audioRef.current.src = OFFICIAL_PLAYLIST[index].src;
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {});
+    setDuration(0);
+    if (playerRef.current && typeof playerRef.current.loadVideoById === 'function') {
+      playerRef.current.loadVideoById(OFFICIAL_PLAYLIST[index].id);
+      setIsPlaying(true);
     }
   };
 
@@ -240,12 +182,20 @@ export default function App() {
     playTrackAtIndex(prevIdx);
   };
 
-  const handleSeekChange = (e) => {
-    if (!audioRef.current) return;
-    const pct = parseFloat(e.target.value);
-    const targetTime = (pct / 100) * duration;
+  // Interactive Seeking (Drag & Click to move line forward / backward)
+  const handleSeekInput = (e) => {
+    dragSeekingRef.current = true;
+    const targetTime = parseFloat(e.target.value);
     setCurrentTime(targetTime);
-    audioRef.current.currentTime = targetTime;
+  };
+
+  const handleSeekChange = (e) => {
+    const targetTime = parseFloat(e.target.value);
+    setCurrentTime(targetTime);
+    if (playerRef.current && typeof playerRef.current.seekTo === 'function') {
+      playerRef.current.seekTo(targetTime, true);
+    }
+    dragSeekingRef.current = false;
   };
 
   // Keyboard Hotkeys
@@ -257,27 +207,30 @@ export default function App() {
         e.preventDefault();
         handlePlayPause();
       } else if (e.code === 'ArrowRight') {
-        if (audioRef.current) {
-          audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
+        if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+          const cur = playerRef.current.getCurrentTime();
+          playerRef.current.seekTo(cur + 10, true);
         }
       } else if (e.code === 'ArrowLeft') {
-        if (audioRef.current) {
-          audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+        if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+          const cur = playerRef.current.getCurrentTime();
+          playerRef.current.seekTo(Math.max(0, cur - 10), true);
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPlaying, currentTrackIndex, duration]);
+  }, [isPlaying, currentTrackIndex, isPlayerReady]);
 
   const formatTime = (secs) => {
-    if (isNaN(secs)) return '0:00';
+    if (isNaN(secs) || secs < 0) return '0:00';
     const mins = Math.floor(secs / 60);
     const remainingSecs = Math.floor(secs % 60);
     return `${mins}:${String(remainingSecs).padStart(2, '0')}`;
   };
 
+  const maxVal = duration > 0 ? duration : 100;
   const progressPct = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
@@ -287,7 +240,7 @@ export default function App() {
         <div className="bg-overlay"></div>
       </div>
 
-      {/* TOP BAR — Minimal Header */}
+      {/* TOP BAR */}
       <header className="top-bar-minimal">
         <div className="top-left-time">
           {timeString}
@@ -299,7 +252,7 @@ export default function App() {
         </div>
 
         <div className="top-right-links">
-          {/* Language Switcher Pill (Hindi | English) - Always visible on Desktop & Mobile */}
+          {/* Language Switcher Pill (Hindi | English) */}
           <div className="lang-switcher">
             <button
               className={`lang-btn ${language === 'hi' ? 'active' : ''}`}
@@ -344,7 +297,12 @@ export default function App() {
         </div>
       </header>
 
-      {/* TITLE: Dynamic Logo Image based on Language State */}
+      {/* Hidden YT Player Target */}
+      <div id="yt-player-container">
+        <div id="yt-player-iframe"></div>
+      </div>
+
+      {/* TITLE: Dynamic Logo Image */}
       <div className="hero-title-container">
         {language === 'hi' ? (
           <img
@@ -383,14 +341,16 @@ export default function App() {
           <h2 className="pill-song-title">{currentTrack.title}</h2>
           <p className="pill-song-artist">{currentTrack.artist}</p>
 
+          {/* Interactive Slider Track for Seeking */}
           <div className="pill-slider-track">
             <input
               type="range"
               className="pill-slider-input"
               min="0"
-              max="100"
-              value={progressPct}
-              step="0.05"
+              max={maxVal}
+              value={currentTime}
+              step="0.1"
+              onInput={handleSeekInput}
               onChange={handleSeekChange}
             />
             <div className="pill-slider-fill" style={{ width: `${progressPct}%` }}></div>
